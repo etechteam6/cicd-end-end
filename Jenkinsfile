@@ -1,7 +1,7 @@
 pipeline {
-
-    agent any 
     
+    agent any 
+
     environment {
         IMAGE_TAG = "${BUILD_NUMBER}"
     }
@@ -14,6 +14,17 @@ pipeline {
                 url: 'https://github.com/etechteam6/cicd-end-end.git',
                 branch: 'main'
            }
+        }
+
+        stage('docker-hub-login') {
+            steps {
+                script {
+                    // Login to Docker using credentials
+                    withCredentials([usernamePassword(credentialsId: '93e13185-a4ce-4588-9a94-912686e48a1f', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
+                    }
+                }
+            }
         }
 
         stage('Build Docker'){
