@@ -32,7 +32,7 @@ pipeline {
                 script{
                     sh '''
                     echo 'Buid Docker Image'
-                    docker build -t kingmoses/job-cicd:${BUILD_NUMBER} .
+                    docker build -t kingmoses33/job-cicd:${BUILD_NUMBER} .
                     '''
                 }
             }
@@ -43,7 +43,7 @@ pipeline {
                 script{
                     sh '''
                     echo 'Push to Repo'
-                    docker push kingmoses/job-cicd:${BUILD_NUMBER}
+                    docker push kingmoses33/job-cicd:${BUILD_NUMBER}
                     '''
                 }
             }
