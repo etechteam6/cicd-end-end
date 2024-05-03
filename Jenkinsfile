@@ -64,7 +64,7 @@ pipeline {
                         sh '''
                         if [ -f deploy.yaml ]; then
                             cat deploy.yaml
-                            sed -i '' "s/4/${BUILD_NUMBER}/g" deploy.yaml
+                            sed -i "s/4/${BUILD_NUMBER}/g" deploy.yaml
                         else
                             echo "Error: deploy.yaml does not exist in the current directory."
                             exit 1
