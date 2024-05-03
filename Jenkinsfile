@@ -62,9 +62,15 @@ pipeline {
                 script{
                     withCredentials([usernamePassword(credentialsId: 'github-creds', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         sh '''
-                        cat deploy.yaml
-                        sed -i '' "s/3/${BUILD_NUMBER}/g" deploy.yaml
-                        cat deploy.yaml
+                        if [ -f deploy.yaml ]; then
+                            cat deploy.yaml
+                            sed -i '' "s/4/${BUILD_NUMBER}/g" deploy.yaml
+                        else
+                            echo "Error: deploy.yaml does not exist in the current directory."
+                            exit 1
+                        fi
+                        '''
+                        sh '''
                         git add deploy.yaml
                         git commit -m 'Updated the deploy yaml | Jenkins Pipeline'
                         git remote -v
