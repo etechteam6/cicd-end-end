@@ -61,21 +61,15 @@ pipeline {
             steps {
                 script{
                     withCredentials([usernamePassword(credentialsId: 'github-creds', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh '''
-                        if [ -f deploy.yaml ]; then
-                            cat deploy.yaml
-                            sed -i "s/4/${BUILD_NUMBER}/g" deploy.yaml
-                        else
-                            echo "Error: deploy.yaml does not exist in the current directory."
-                            exit 1
-                        fi
-                        '''
-                        sh '''
+                    sh '''
+                        cat deploy.yaml
+                        sed -i "s/8/${BUILD_NUMBER}/g" deploy.yaml
+                        cat deploy.yaml
                         git add deploy.yaml
                         git commit -m 'Updated the deploy yaml | Jenkins Pipeline'
                         git remote -v
                         git push https://github.com/KingMoses33/manifest-cicd.git HEAD:main
-                        '''                        
+                        '''                     
                     }
                 }
             }
